@@ -8,13 +8,22 @@ export default async function healthRoute(fastify) {
     };
   });
 
-  fastify.get("/health/db", async (request, reply) => {
+  fastify.get("/health/db", async (req, reply) => {
     try {
-      await fastify.pg.query("SELECT 1");
-      return { status: "ok", db: "connected" };
+      const res = await fastify.pg.query("select now()");
+      return {
+        status: "ok",
+        db: "connected",
+        time: res.rows[0].now,
+      };
     } catch (err) {
+      req.log.error(err);
       reply.code(500);
-      return { status: "error", db: "disconnected" };
+      return {
+        status: "error",
+        db: "disconnected",
+        error: err.message,
+      };
     }
   });
 }

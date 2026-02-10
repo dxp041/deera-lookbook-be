@@ -18,5 +18,8 @@ await app.register(catalogRoute);
 await app.register(adminRoute);
 await app.register(healthRoute);
 
-await app.listen({ port: env.PORT });
+await fastify.listen({
+  port: process.env.PORT || 3000,
+  host: "0.0.0.0",
+});
 app.log.info(`🚀 Server running on ${env.PORT}`);

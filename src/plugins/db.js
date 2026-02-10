@@ -5,7 +5,7 @@ const { Pool } = pg;
 
 async function dbPlugin(fastify) {
   const pool = new Pool({
-    connectionString: fastify.env.DB_URL,
+    connectionString: fastify.env.DATABASE_URL,
     max: 10,
     idleTimeoutMillis: 30_000,
     connectionTimeoutMillis: 2_000,
